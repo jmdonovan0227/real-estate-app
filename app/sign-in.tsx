@@ -11,13 +11,14 @@ const SignIn = () => {
 
   return (
     <SafeAreaView className="bg-white h-full">
-      <ScrollView contentContainerClassName="h-full">
+      <ScrollView contentContainerClassName="flex-grow">
+        {" "}
+        {/** flex-grow is used to make the scroll view take up the remaining space in viewport and scroll if needed */}
         <Image
           source={images.onboarding}
           className="w-full h-4/6"
           resizeMode="contain"
         />
-
         <View className="px-10">
           <Text className="text-base text-center uppercase font-rubik text-black-200">
             Welcome to Real Estate App
