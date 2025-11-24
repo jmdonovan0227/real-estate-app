@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "realestateapp",
+    "scheme": "appwrite-callback-6924d169001a8b9d02d2",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
