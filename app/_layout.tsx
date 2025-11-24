@@ -3,6 +3,9 @@ import "./global.css";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 
+// Prevent the splash screen from auto-hiding before fonts are loaded
+SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     "Rubik-Regular": require("../assets/fonts/Rubik-Regular.ttf"),
