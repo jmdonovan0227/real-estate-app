@@ -30,8 +30,8 @@ export async function login() {
     // Start OAuth flow
     const loginUrl = await account.createOAuth2Token({
       provider: OAuthProvider.Google,
-      success: `${deepLink}`,
-      failure: `${deepLink}`,
+      success: `${deepLink}?status=success`,
+      failure: `${deepLink}?status=failure`,
     });
 
     if (!loginUrl) {
@@ -94,13 +94,25 @@ export async function getCurrentUser() {
     const response = await account.get(); // get currently logged in user
 
     if (response.$id) {
-      // if their is a user id, then get the user avatar
+      // if their is a user id, then get the user avatar (userAvatar is an ArrayBuffer)
       const userAvatar = await avatar.getInitials(); // get the user avatar initials using the currently logged in user (we need a session to be set on client)
+
+      // convert ArrayBuffer to uint8Array so we can iterate over the memory (bytes) of the ArrayBuffer
+      const uint8Array = new Uint8Array(userAvatar);
+      // convert array of bytes to binary string that we can pass to btoa to create a base64 string
+      const binaryString = String.fromCharCode(...uint8Array);
+      // convert binary string to base64 string
+      const base64 = btoa(binaryString);
+      // create a data url for the avatar (ex: data:image/image type;base64,image data as base64 string)
+      const avatarUrl = `data:image/jpeg;base64,${base64}`;
+
       return {
         ...response,
-        avatar: userAvatar.toString(),
+        avatar: avatarUrl,
       };
     }
+
+    return null;
   } catch (error) {
     console.error("Error getting current user: ", error);
     return null;
