@@ -1,18 +1,40 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
+import { login } from "@/lib/appwrite";
+import { useGlobalContext } from "@/lib/global-provider";
+import { Redirect } from "expo-router";
 
 const SignIn = () => {
-  const handleLogin = () => {
-    console.log("Login with Google");
+  const { isLoggedIn, loading, refetch } = useGlobalContext();
+
+  if (!loading && isLoggedIn) {
+    // redirect to home if user is logged in
+    return <Redirect href="/" />;
+  }
+
+  const handleLogin = async () => {
+    const result = await login(); // this creates a new session for the user and returns true if successful
+
+    if (result) {
+      refetch(); // refetch the user data to get the latest user data
+    } else {
+      Alert.alert("Login failed");
+    }
   };
 
   return (
     <SafeAreaView className="bg-white h-full">
       <ScrollView contentContainerClassName="flex-grow">
-        {" "}
         {/** flex-grow is used to make the scroll view take up the remaining space in viewport and scroll if needed */}
         <Image
           source={images.onboarding}
