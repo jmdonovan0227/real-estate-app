@@ -6,7 +6,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 const Search = () => {
   const params = useLocalSearchParams<{ query?: string }>();
-  const [searchQuery, setSearchQuery] = useState(params.query);
+  const [searchQuery, setSearchQuery] = useState(params.query || "");
 
   // modify the router with the query text after 500ms of inactivity (debounce)
   const debouncedSearch = useDebouncedCallback(
@@ -27,7 +27,7 @@ const Search = () => {
           value={searchQuery}
           onChangeText={handleSearch}
           placeholder="Search for a property"
-          className="text-sm font-rubk text-black-300 ml-2 flex-1"
+          className="text-sm font-rubik text-black-300 ml-2 flex-1"
         />
       </View>
 

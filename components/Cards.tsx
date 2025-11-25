@@ -78,7 +78,11 @@ export const Card = ({ onPress }: Props) => {
             $2500 / month
           </Text>
 
-          <Image source={icons.heart} className="size-5 mr-2" tintColor={""} />
+          <Image
+            source={icons.heart}
+            className="size-5 mr-2"
+            tintColor="#191D31"
+          />
         </View>
       </View>
     </TouchableOpacity>
