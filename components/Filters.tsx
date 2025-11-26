@@ -25,6 +25,7 @@ const Filters = () => {
   const router = useRouter();
 
   const handleCategoryPress = (category: string) => {
+    console.log("selectedCategory", selectedCategory);
     if (selectedCategory === category) {
       router.setParams({ filter: "All" });
       return;
@@ -39,19 +40,21 @@ const Filters = () => {
       showsHorizontalScrollIndicator={false}
       className="mt-3 mb-2"
     >
-      {categories.map((item, index) => (
-        <TouchableOpacity
-          key={index}
-          className={`flex flex-col items-start mr-4 px-4 py-2 rounded-full ${selectedCategory === item.category ? "bg-primary-300" : "bg-primary-100 border border-primary-200"}`}
-          onPress={() => handleCategoryPress(item.category)}
-        >
-          <Text
-            className={`text-sm ${selectedCategory === item.category ? "text-white font-rubik-bold mt-0.5" : "text-black-300 font-rubik"}`}
+      {categories.map((item, index) => {
+        return (
+          <TouchableOpacity
+            key={index}
+            className={`flex flex-col items-start mr-4 px-4 py-2 rounded-full ${selectedCategory === item.category ? "bg-primary-300" : "bg-primary-100 border border-primary-200"}`}
+            onPress={() => handleCategoryPress(item.category)}
           >
-            {item.title}
-          </Text>
-        </TouchableOpacity>
-      ))}
+            <Text
+              className={`text-sm ${selectedCategory === item.category ? "text-white font-rubik-bold mt-0.5" : "text-black-300 font-rubik"}`}
+            >
+              {item.title}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
     </ScrollView>
   );
 };
