@@ -8,6 +8,7 @@ import {
 } from "react-native-appwrite";
 import { makeRedirectUri } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
+import type { Properties } from "@/types/appwrite";
 
 interface GetPropertiesProps {
   filter?: string;
@@ -139,15 +140,15 @@ export async function getCurrentUser() {
   }
 }
 
-export async function getLatestProperties() {
+export async function getLatestProperties(): Promise<Properties[]> {
   try {
     const result = await databases.listRows({
       databaseId: config.databaseId!,
       tableId: config.propertiesTableName!,
-      queries: [Query.orderAsc("$createdAt"), Query.limit(5)],
+      queries: [Query.orderDesc("$createdAt"), Query.limit(5)],
     });
 
-    return result.rows;
+    return result.rows as unknown as Properties[];
   } catch (error) {
     console.error(error);
     return [];
@@ -158,7 +159,7 @@ export async function getProperties({
   filter,
   query,
   limit,
-}: GetPropertiesProps) {
+}: GetPropertiesProps): Promise<Properties[]> {
   try {
     const buildQuery = [Query.orderDesc("$createdAt")];
 
@@ -187,7 +188,7 @@ export async function getProperties({
       queries: buildQuery,
     });
 
-    return result.rows;
+    return result.rows as unknown as Properties[];
   } catch (error) {
     console.error(error);
     return [];

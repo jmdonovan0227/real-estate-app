@@ -159,18 +159,6 @@
                     "min": 0,
                     "max": 5,
                     "default": null
-                },
-                {
-                    "key": "property",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedTable": "properties",
-                    "relationType": "manyToOne",
-                    "twoWay": true,
-                    "twoWayKey": "reviews",
-                    "onDelete": "cascade",
-                    "side": "parent"
                 }
             ],
             "indexes": []
@@ -330,7 +318,7 @@
                     "relatedTable": "galleries",
                     "relationType": "oneToMany",
                     "twoWay": false,
-                    "twoWayKey": "6926775e0037496f9ac7",
+                    "twoWayKey": "properties",
                     "onDelete": "cascade",
                     "side": "parent"
                 },
@@ -340,14 +328,59 @@
                     "required": false,
                     "array": false,
                     "relatedTable": "reviews",
-                    "relationType": "manyToOne",
-                    "twoWay": true,
-                    "twoWayKey": "property",
+                    "relationType": "oneToMany",
+                    "twoWay": false,
+                    "twoWayKey": "69278a97000b750fd932",
                     "onDelete": "cascade",
-                    "side": "child"
+                    "side": "parent"
                 }
             ],
-            "indexes": []
+            "indexes": [
+                {
+                    "key": "by-name",
+                    "type": "fulltext",
+                    "status": "available",
+                    "columns": [
+                        "name"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "by-address",
+                    "type": "fulltext",
+                    "status": "available",
+                    "columns": [
+                        "address"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "by-type",
+                    "type": "fulltext",
+                    "status": "available",
+                    "columns": [
+                        "type"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                },
+                {
+                    "key": "by-description",
+                    "type": "fulltext",
+                    "status": "available",
+                    "columns": [
+                        "description"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
         }
     ]
 }
