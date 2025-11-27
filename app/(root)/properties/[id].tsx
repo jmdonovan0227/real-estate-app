@@ -7,6 +7,7 @@ import {
   View,
   Dimensions,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 
@@ -19,22 +20,32 @@ import { useAppwrite } from "@/lib/useAppwrite";
 import { getPropertyById } from "@/lib/appwrite";
 
 const Property = () => {
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  const { id } = useLocalSearchParams<{ id: string }>();
 
   const windowHeight = Dimensions.get("window").height;
 
-  const { data: property } = useAppwrite({
+  const { data: property, loading: propertiesLoading } = useAppwrite({
     fn: getPropertyById,
     params: {
-      id: id!,
+      id,
     },
   });
 
-  // console.log("property: ", property);
-  console.log("property?.reviews: ", property?.reviews);
-  console.log("property?.gallery: ", property?.gallery);
-  console.log("property?.agent: ", property?.agent);
-  console.log("gallery length: ", property?.gallery?.length);
+  if (propertiesLoading) {
+    return (
+      <View className="flex flex-1 items-center justify-center">
+        <ActivityIndicator size="large" className="text-primary-300" />
+      </View>
+    );
+  } else if (!property) {
+    return (
+      <View className="flex flex-1 items-center justify-center">
+        <Text className="text-2xl font-rubik-bold">
+          Sorry! We could not load this property...
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View>
