@@ -194,3 +194,23 @@ export async function getProperties({
     return [];
   }
 }
+
+export async function getPropertyById({
+  id,
+}: {
+  id: string;
+}): Promise<Properties | null> {
+  try {
+    const result = await databases.getRow({
+      databaseId: config.databaseId!,
+      tableId: config.propertiesTableName!,
+      rowId: id,
+      queries: [Query.select(["*", "reviews.*", "gallery.*", "agent.*"])], // select all columns from the properties table, reviews table, gallery table, and agent table using the $id or $ids of the properties (foreign keys) to match the rows in the reviews, gallery, and agent tables
+    });
+
+    return result as unknown as Properties;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
