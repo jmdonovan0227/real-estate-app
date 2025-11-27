@@ -29,8 +29,8 @@ export default function Explore() {
   } = useAppwrite({
     fn: getProperties,
     params: {
-      filter: params.filter!,
-      query: params.query!,
+      filter: params.filter ?? "",
+      query: params.query ?? "",
       limit: 20,
     },
 
@@ -39,8 +39,8 @@ export default function Explore() {
 
   useEffect(() => {
     refetchProperties({
-      filter: params.filter!,
-      query: params.query!,
+      filter: params.filter ?? "",
+      query: params.query ?? "",
       limit: 20,
     });
   }, [params.filter, params.query]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -82,7 +82,9 @@ export default function Explore() {
             <View className="mt-5">
               <Filters />
 
-              <Text className="text-xl font-rubik-bol text-black-300 mt-5"></Text>
+              <Text className="text-xl font-rubik-bold text-black-300 mt-5">
+                {properties?.length} properties found
+              </Text>
             </View>
           </View>
         }
