@@ -37,8 +37,8 @@ export default function Index() {
   } = useAppwrite({
     fn: getProperties,
     params: {
-      filter: params.filter!,
-      query: params.query!,
+      filter: params.filter ?? "",
+      query: params.query ?? "",
       limit: 6,
     },
 
@@ -47,8 +47,8 @@ export default function Index() {
 
   useEffect(() => {
     refetchProperties({
-      filter: params.filter!,
-      query: params.query!,
+      filter: params.filter ?? "",
+      query: params.query ?? "",
       limit: 6,
     });
   }, [params.filter, params.query]); // eslint-disable-line react-hooks/exhaustive-deps
